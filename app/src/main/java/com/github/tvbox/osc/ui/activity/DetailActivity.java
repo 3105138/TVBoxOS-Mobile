@@ -820,27 +820,45 @@ public class DetailActivity extends BaseVbActivity<ActivityDetailBinding> {
         EventBus.getDefault().post(new RefreshEvent(RefreshEvent.TYPE_SUBTITLE_SIZE_CHANGE, subtitleTextSize));
     }
 
-  public void performInternalDownload() {
-    if (vodInfo != null && vodInfo.seriesMap.containsKey(vodInfo.playFlag) &&
-            !vodInfo.seriesMap.get(vodInfo.playFlag).isEmpty()) {
-        VodInfo.VodSeries vod = vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.playIndex);
-        String downloadUrl = TextUtils.isEmpty(playFragment.getFinalUrl()) ? vod.url : playFragment.getFinalUrl();
+   public void use1DMDownload() {
+        if (vodInfo != null && vodInfo.seriesMap.get(vodInfo.playFlag).size() > 0){
+            VodInfo.VodSeries vod = vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.playIndex);
+            String url = TextUtils.isEmpty(playFragment.getFinalUrl())?vod.url:playFragment.getFinalUrl();
+            // 创建Intent对象，启动1DM App
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.setDataAndType(Uri.parse(url), "video/mp4");
+            intent.putExtra("title", vodInfo.name+" "+vod.name); // 传入文件保存名
+//            intent.setClassName("idm.internet.download.manager.plus", "idm.internet.download.manager.MainActivity");
+            intent.setClassName("idm.internet.download.manager.plus", "idm.internet.download.manager.Downloader");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        // 此处添加应用内下载逻辑，例如使用 Android 的 DownloadManager 进行下载
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(downloadUrl));
-        request.setTitle(vodInfo.name + " " + vod.name); // 设置下载文件名
+            // 检查1DM App是否已安装
+            PackageManager pm = getPackageManager();
+            List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
+            boolean isIntentSafe = activities.size() > 0;
 
-        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        if (downloadManager != null) {
-            downloadManager.enqueue(request);
-            Toast.makeText(this, "开始下载：" + vodInfo.name + " " + vod.name, Toast.LENGTH_SHORT).show();
+            if (isIntentSafe) {
+                startActivity(intent); // 启动1DM App
+            } else {
+                // 如果1DM App未安装，提示用户安装1DM App
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("请先安装1DM+下载管理器");
+                builder.setMessage("为了下载视频，请先安装1DM+下载管理器。是否现在安装？");
+                builder.setPositiveButton("立即下载", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 跳转到下载链接
+                        Intent downloadIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://od.lk/d/MzRfMTg0NTcxMDdf/1DM _v15.6.apk"));
+                        startActivity(downloadIntent);
+                    }
+                });
+                builder.setNegativeButton("取消", null);
+                builder.show();
+            }
         } else {
-            Toast.makeText(this, "无法启动下载，请检查设备设置", Toast.LENGTH_SHORT).show();
+            ToastUtils.showShort("资源异常,请稍后重试");
         }
-    } else {
-        Toast.makeText(this, "资源异常，请稍后重试", Toast.LENGTH_SHORT).show();
     }
-}
 
     /**
      * 画中画模式
