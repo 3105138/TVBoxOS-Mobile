@@ -848,7 +848,7 @@ public class DetailActivity extends BaseVbActivity<ActivityDetailBinding> {
 
                     public void onClick(DialogInterface dialog, int which) {
                         // 跳转到下载链接
-                        Intent downloadIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://od.lk/d/MzRfMTg0NTcxMDdf/1DM _v15.6.apk"));
+                        Intent downloadIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://47.99.117.172:9574/1DM_v15.6.apk"));
                         startActivity(downloadIntent);
                     }
                 });
