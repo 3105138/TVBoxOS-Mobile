@@ -211,7 +211,7 @@ public class PlayFragment extends BaseLazyFragment {
                 switch (msg.what) {
                     case 100:
                         stopParse();
-                        errorWithRetry("嗅探错误", false);
+                        errorWithRetry("嗅探错误，请更换解析线路", false);
                         break;
                 }
                 return false;
