@@ -144,7 +144,7 @@ public class HomeFragment extends BaseVbFragment<FragmentHomeBinding> {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtils.showShort("更新订阅失败");
+                                ToastUtils.showShort("By_bobby");
                                 initData();
                             }
                         });
