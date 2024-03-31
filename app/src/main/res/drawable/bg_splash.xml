@@ -8,6 +8,6 @@
     <item >
         <bitmap
             android:gravity="center"
-            android:src="https://gitee.com/wangjie310/tv/raw/main/text/sy1.jpg" />
+            android:src="@drawable/iv_splash" />
     </item>
 </layer-list>
