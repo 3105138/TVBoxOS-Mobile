@@ -279,7 +279,7 @@ public class PlayFragment extends BaseLazyFragment {
 
             @Override
             public void errReplay() {
-                errorWithRetry("视频播放出错", false);
+                errorWithRetry("播放出错，请尝试重新播放", false);
             }
 
             @Override
