@@ -670,12 +670,8 @@ public class PlayFragment extends BaseLazyFragment {
                     if (finish) {
                         Toast.makeText(mContext, err, Toast.LENGTH_SHORT).show();
                     } else {
-                        if (err.equals("视频播放出错") && !retriedSwitchPlayer){
-                            ToastUtils.showShort("播放出错,正在尝试切换播放器");
-                            retriedSwitchPlayer = true;
-                            mController.mPlayerBtn.performClick();
+                        if (err.equals("播放出错,请尝试重新播放") && !retriedSwitchPlayer){
                         }
-                        setTip(err, false, true);
                     }
                 }
             });
