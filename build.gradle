@@ -26,6 +26,10 @@ allprojects {
         //dlna-cast中cling仓
      //   maven { url 'http://4thline.org/m2'}
         maven { url "https://jitpack.io" }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         gradlePluginPortal()
         google()
         mavenCentral()
